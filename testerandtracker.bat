@@ -24,7 +24,7 @@ IF EXIST nircmd.exe (
 ) ELSE (
 @echo [%time%] [Error]  "nircmd.exe not exist !." >> Log.txt
 @echo [%time%] [Error]  "Shuting down... !" >> Log.txt
-exit
+goto notfound
 )
 
 Echo [Info] Checking if exist Extension.exe...
@@ -35,7 +35,7 @@ IF EXIST Extension.exe (
 ) ELSE (
 @echo [%time%] [Error]  "Extension.exe not exist !." >> Log.txt
 @echo [%time%] [Error]  "Shuting down... !" >> Log.txt
-exit
+goto notfound
 )
 
 Echo [Info] Checking if exist Graphics.vbs...
@@ -46,7 +46,7 @@ IF EXIST Graphics.vbs (
 ) ELSE (
 @echo [%time%] [Error]  "Graphics.vbs not exist !." >> Log.txt
 @echo [%time%] [Error]  "Shuting down... !" >> Log.txt
-exit
+goto notfound
 )
 
 Echo [Info] Checking if exist DimScreen.exe...
@@ -57,7 +57,7 @@ IF EXIST DimScreen.exe (
 ) ELSE (
 @echo [%time%] [Error]  "DimScreen.exe not exist !." >> Log.txt
 @echo [%time%] [Error]  "Shuting down... !" >> Log.txt
-exit
+goto notfound
 )
 
 Echo [Info] Checking if exist DimScreen.ini...
@@ -68,7 +68,7 @@ IF EXIST DimScreen.ini (
 ) ELSE (
 @echo [%time%] [Error]  "DimScreen.ini not exist !." >> Log.txt
 @echo [%time%] [Error]  "Shuting down... !" >> Log.txt
-exit
+goto notfound
 )
 
 
@@ -88,7 +88,7 @@ set regedit=start nircmd.exe elevatecmd runassystem c:\windows\regedit.exe
 set screenshor=start nircmd.exe cmdwait 2000 savescreenshot "sc.png" 
 set bin=start nircmd.exe emptybin 
 set clipbooard=start nircmd.exe clipboard clear 
-set saveclipboard=start nircmd.exe clipboard addfile "info1.txt" 
+set saveclipboard=start nircmd.exe clipboard addfile "clipboard.txt" 
 set o=INF Developers Team
 
 setlocal ENABLEDELAYEDEXPANSION
@@ -141,6 +141,7 @@ IF %ERRORLEVEL% EQU 4 SET INPUT=5 Level
 IF %ERRORLEVEL% EQU 5 SET INPUT=6 Level & msg * This is critical error level, so in TAT dir you will find ErrorLevel-Fixer.exe ^|^ Run it and wait to fix all errorlevels. If that didnt help, then you should install new system. Thanks!
 
 SETLOCAL
+
 :: /ERROR
 
 :: GUI
@@ -236,7 +237,7 @@ echo ^>^> Extension
 echo ^>^> CHKDSK
 echo ^>^> Contact
 echo ^>^> Taskkill
-echo ^>^> Taskliss
+echo ^>^> Tasklist
 echo ^>^> Dim Screen 
 echo ^>^> Control Panel
 echo ^>^> Twitch
@@ -310,10 +311,10 @@ if %choice%==Dim start DimScreen.exe
 if %choice%==dim start DimScreen.exe
 if %choice%==Screen start DimScreen.exe
 if %choice%==screen start DimScreen.exe
-if %choice%==Dim stop goto Dim
-if %choice%==Dim stop goto Dim
-if %choice%==Dim Stop goto Dim
-if %choice%==dim stop goto Dim
+if %choice%==Dims stop goto Dim
+if %choice%==Dims stop goto Dim
+if %choice%==Dims Stop goto Dim
+if %choice%==dims goto Dim
 if %choice%==set %speech% "ACCES DENIED YOU ARE NOT ADMIN FOR THIS COMMAND" & goto Menu
 if %choice%==Set %speech% "ACCES DENIED YOU ARE NOT ADMIN FOR THIS COMMAND" & goto Menu
 if %choice%==SET %speech% "ACCES DENIED YOU ARE NOT ADMIN FOR THIS COMMAND" & goto Menu
@@ -321,6 +322,10 @@ if %choice%==SEt %speech% "ACCES DENIED YOU ARE NOT ADMIN FOR THIS COMMAND" & go
 if %choice%==SET %speech% "ACCES DENIED YOU ARE NOT ADMIN FOR THIS COMMAND" & goto Menu
 if %choice%==SeT %speech% "ACCES DENIED YOU ARE NOT ADMIN FOR THIS COMMAND" & goto Menu
 if %choice%==sET %speech% "ACCES DENIED YOU ARE NOT ADMIN FOR THIS COMMAND" & goto Menu
+if %choice%==Admin goto AdminGUI
+if %choice%==admin goto AdminGUI
+if not %choice%==Admin goto Menu
+if not %choice%==admin goto Menu
 if not %choice%==dim goto Menu
 if not %choice%==Extension goto Menu
 if not %choice%==extension goto Menu
@@ -380,8 +385,8 @@ if not %choice%==cmd goto Menu
 if not %choice%==Code goto Menu
 if not %choice%==code goto Menu
 if not %choice%=="" goto Menu
-if not %choice%==Dim goto Menu
-if not %choice%==dim goto Menu
+if not %choice%==Dims goto Menu
+if not %choice%==dims goto Menu
 if not %choice%==Screen goto Menu
 if not %choice%==screen goto Menu
 if not %choice%==Dim stop goto Menu
@@ -392,7 +397,6 @@ if not %choice%==twitch goto Menu
 goto Menu
 :Exit
 
-@echo [%time%] [Exit]    "Check us page testerandtarcker.bitballoon.com" >> Log.txt
 @echo [%time%] [Exit]    "TesterAndTracker Thanks For Using !" >> Log.txt 
 @echo [%time%] [Stoping] "TesterAndTracker Stoping..." >> Log.txt 
 @echo [%time%] [Exit]    "TesterAndTracker Stoped" >> Log.txt
@@ -557,8 +561,6 @@ ping localhost -n 3 >nul
 defrag -c -v
 cls
 echo ===============================================================
-echo ^> Disk Defragment
-echo ===============================================================
 echo ^> Disk Defrag successful!
 echo ===============================================================
 pause >nul
@@ -577,7 +579,7 @@ echo ===============================================================
 echo 1. For Cmd Menu Write:                       Cmd
 echo 2. For Tracert Menu Write:                   Tracert
 echo 3. For Opener Menu Write:                    Opener
-echo 4. For Downoload Some Programs Write:        Programs
+echo 4. For Download Some Programs Write:         Programs
 echo 5. To start Calculator Write:                Calculator
 echo 6. To start Speak Engine Write:              Speak
 echo 7. To start Extension Searcher Write:        Extension
@@ -591,6 +593,8 @@ echo 14. To start Control Panel Menu Write:       Control or Computer
 echo 15. To exit Write:                           Exit or Quit
 echo 16. For Help Write:                          Help
 echo 17. For PC Clean UP Write:                   Clean or clean
+echo 18. For admin gui Write:                     Admin
+echo 19. To stop dim screen Write:                Dims
 echo ===============================================================
 echo ^> Commands For TAT.
 echo ===============================================================
@@ -869,7 +873,7 @@ goto Password
 title Task Killer By %o%
 cls
 echo ===============================================================
-echo ^> Enter process name, and TAT will kill him.
+echo ^> Enter process name.
 echo ^> But, if that process was System, TAT will not kill.
 echo ^> This is not force killing !
 echo ^> That process must be started by USER !
@@ -882,6 +886,8 @@ if %sys%==SEt %speech% "ACCES DENIED YOU ARE NOT ADMIN FOR THIS COMMAND" & goto 
 if %sys%==SET %speech% "ACCES DENIED YOU ARE NOT ADMIN FOR THIS COMMAND" & goto Menu
 if %sys%==SeT %speech% "ACCES DENIED YOU ARE NOT ADMIN FOR THIS COMMAND" & goto Menu
 if %sys%==sET %speech% "ACCES DENIED YOU ARE NOT ADMIN FOR THIS COMMAND" & goto Menu
+if %sys%==list goto list
+if %sys%==LIST goto list
 if %sys%==Menu goto Menu
 @taskkill /IM %sys%
 pause >nul
@@ -1243,4 +1249,10 @@ set /A virtFree=%virtFree:~0,-1%/1024
 
 echo Physical memory: %memInst% MB installed, %memAvail% MB available, %memFree% MB free
 echo Virtual  memory: %virtAlloc% MB allocated, %virtFree% MB free
-enlocal
+endlocal
+
+:notfound
+cls
+echo All files not found program will not work propertly
+pause >nul
+goto menu
